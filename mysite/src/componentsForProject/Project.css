@@ -1,0 +1,49 @@
+.registration-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #f0f0f0; /* Add your preferred background color */
+    border-radius: 8px; /* Optional: Add rounded corners for a better look */
+  }
+  
+  .registration-form form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .registration-form h5 {
+    margin-bottom: 20px;
+  }
+  
+  .registration-form .MuiTextField-root {
+    margin-bottom: 16px;
+  }
+  
+  .registration-form .MuiButton-root {
+    margin-top: 20px;
+  }
+ .abi
+ {
+  
+  background-color: aliceblue;
+  
+ }
+ .em
+ {
+  background-color: aliceblue;
+ }
+ .pass
+ {
+  background-color:aliceblue;
+ }
+ .conf
+ {
+  background-color: aliceblue;
+ }
+ body{
+  background-image: url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fonline-pharmacy&psig=AOvVaw2Hp9LgVcYkUuokCmOZWGVa&ust=1700368209632000&source=images&cd=vfe&ved=0CBIQjRxqFwoTCJijtavbzIIDFQAAAAAdAAAAABAE);
+}

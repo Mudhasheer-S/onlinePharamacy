@@ -1,0 +1,21 @@
+#maindiv{
+    /* border: 2px solid black; */
+    height:200px;
+    margin: 30px;
+    margin-top: 50px;
+}
+
+.login{
+    /* border:2px solid black; */
+    /* margin: 20px 500px 5px 5px; */
+    /* padding:15px; */
+    height: 400px;
+    border-radius: 5px;
+}
+
+.slick-prev,
+.slick-next,
+.slick-prev:before,
+.slick-next:before {
+  color: #165D69 !important;
+}

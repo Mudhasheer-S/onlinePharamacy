@@ -1,0 +1,22 @@
+.list{
+    margin-top: 15px;
+}
+.share
+{
+    display: flex;
+    flex-direction: row;
+}
+.marginr
+{
+    margin-left: 16px;
+}
+.layout
+{
+    border: 1.2px solid black;
+    border-radius: 20px;
+    margin-top: 12px;
+    margin-left: 15px;
+}
+.con{
+    margin-top: 50px;
+}
