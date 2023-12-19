@@ -15,8 +15,6 @@ function ManageProfile() {
     const [Lname, setLname] = React.useState('');
     const [dob, setdob] = React.useState('');
     const [phone, setphone] = React.useState('');
-    const [username, setusername] = React.useState('');
-    const [password, setpassword] = React.useState('');
     const [age, setAge] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [UserId, setUserId] = React.useState('')
