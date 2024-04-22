@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./ResponsiveCards.css"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import axios from 'axios';
 import { Button, Grid, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { MyProvider } from '../App';
 
 
 const settings = {
@@ -23,6 +24,8 @@ const ResponsiveCards = () => {
   const [data, setvalue] = useState([]);
   const navigator = useNavigate();
 
+  const {ContexData,setContexData} = useContext(MyProvider)
+
   useEffect(() => {
     const apiurl = 'http://localhost:8080/products';
 
@@ -32,6 +35,24 @@ const ResponsiveCards = () => {
         console.error("Error", error);
       })
   }, [])
+
+  const handleButton = async (idValue) => {
+    const objectValue = {
+        product_id:idValue,
+        username:ContexData,
+        qty:1
+      }
+      const addItem=null;
+      try{
+        addItem = await axios.post(`http://localhost:8080/UserCart`,objectValue);
+        
+      }
+      catch(err){
+        console.error(err);
+      }
+      navigator("/MyCart")
+}
+
   return (
     <div id="maindiv">
       <Slider arrows {...settings}>
@@ -62,7 +83,7 @@ const ResponsiveCards = () => {
                 </Box>
                 <Box sx={{ textAlign: "center", height: "15%", }}>
 
-                  <Button variant='contained' sx={{ backgroundColor: "#165D69", borderRadius: "10px" }} fullWidth>ADD TO CARD</Button>
+                  <Button variant='contained' sx={{ backgroundColor: "#165D69", borderRadius: "10px" }} fullWidth onClick={() => {handleButton(data.id)}}>ADD TO CARD</Button>
                 </Box>
               </Box>
             </Grid>

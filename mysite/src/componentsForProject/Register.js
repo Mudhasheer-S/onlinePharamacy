@@ -49,7 +49,6 @@ export default function RegisterForm() {
                 });
                 const id = await axios.get(`http://localhost:8080/userData?username=${username}`)
 
-                // await axios.post("http://localhost:3001/CartItem",{id:id.data.id,Item:[]})
                 navigation("/login");
             }
             

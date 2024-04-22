@@ -41,10 +41,6 @@ export default function LoginForm() {
     else if(UserPassword == response.data.password){
 
       setContexData(UserName);
-
-      // axios.put("http://localhost:3001/userProfile/1",{id:1,profileValue:response.data[0].id})
-      // .then(response => console.log(response.data))
-      // .catch(error => console.log(error))
       
       navigator("/");
     }

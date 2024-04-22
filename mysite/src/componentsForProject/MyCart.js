@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './MyCart.css';
 import { Button, Typography, Grid } from '@mui/material';
 import { Margin } from '@mui/icons-material';
@@ -6,17 +6,18 @@ import NavBar from './NavBar';
 import NavBar2 from './NavBar2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { MyProvider } from '../App';
 
 const MyCart = () => {
     const navigator = useNavigate();
     const [orders, setData] = useState([]);
+    const {ContexData,setContexData} = useContext(MyProvider);
 
     useEffect(() => {
         const fetchData = async () => {
-            const responce = await axios.get("http://localhost:3001/userProfile/1");
 
-            axios.get(`http://localhost:3001/CartItem/${responce.data.profileValue}`)
-                .then(responce => setData(responce.data.Item))
+            axios.get(`http://localhost:8080/UserCart?username=${ContexData}`)
+                .then(responce => setData(responce.data))
                 .catch(error => console.log(error))
         }
         fetchData();
@@ -34,21 +35,21 @@ const MyCart = () => {
                 </div>
                 <Grid container spacing={8} sm={6}>
                     {orders.map((order) => (
-                        <Grid item xs={12} sm={6} md={10} xl={10} key={order.image}>
+                        <Grid item xs={12} sm={6} md={10} xl={10} key={order.product.img}>
                             <div className="order-box">
                                 <div className="order-details">
-                                    <img src={order.image} alt={order.heading} />
+                                    <img src={order.product.img} alt={order.product.heading} />
                                     <div className="vertical-line"></div>
                                     <div style={{ marginRight: "35px" }}>
-                                        <p>{order.heading}</p>
+                                        <p>{order.product.heading}</p>
                                     </div>
                                     <div className="vertical-line"></div>
                                     <div style={{ marginLeft: "15px", marginRight: "0px" }}>
-                                        <p>QTY: {order.Quantity}</p>
+                                        <p>QTY: {order.qty}</p>
                                     </div>
                                     <div className="vertical-line"></div>
                                 </div>
-                                <Typography>MRP: ₹{order.Rs}</Typography>
+                                <Typography>MRP: ₹{order.product.rate}</Typography>
                             </div>
                         </Grid>
                     ))}

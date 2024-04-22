@@ -67,34 +67,18 @@ function ProductDetail() {
 
     const objectValue = {
       product_id:idValue,
-      username:ContexData
+      username:ContexData,
+      qty: quantity==0 ? 1 : quantity
     }
     const addItem=null;
     try{
       addItem = await axios.post(`http://localhost:8080/UserCart`,objectValue);
-
+      
     }
     catch(err){
       console.error(err);
     }
   };
-
-  // const cart = async (event) => {
-  //   const responce1 = await axios.get("http://localhost:3001/userProfile/1");
-  //   const getProductObject = await axios.get(`http://localhost:3001/dataSlide/${idValue}`);
-  //   const objectValue = {
-  //     image: getProductObject.data.img,
-  //     Rs: getProductObject.data.rate,
-  //     heading: getProductObject.data.heading,
-  //     Quantity: quantity
-  //   }
-
-
-  //   const response = await axios.get(`http://localhost:3001/cartItem/${responce1.data.profileValue}`);
-  //   const cartItem = response.data;
-  //   cartItem.Item.push(objectValue);
-  //   await axios.put(`http://localhost:3001/cartItem/${responce1.data.profileValue}`, cartItem);
-  // };
 
   return (
     <div >
