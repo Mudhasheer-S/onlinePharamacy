@@ -2,13 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import NavBar from './NavBar'
 import NavBar2 from './NavBar2'
 import ProfileNav from './profileNav'
-import { Padding } from '@mui/icons-material';
 import Popup from 'reactjs-popup'
 import { Avatar, Button, Typography, Paper, Grid, Box, TextField } from '@mui/material';
 import "./ManageProfile.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MyProvider } from '../App';
+// import { MyProvider } from '../App';
 function ManageProfile() {
     const [gender, setGender] = React.useState('');
     const [Fname, setFname] = React.useState('');
@@ -21,7 +20,7 @@ function ManageProfile() {
     const [userData, setData] = React.useState('');
     const navigator = useNavigate();
 
-    const context = useContext(MyProvider)
+    // const context = useContext(MyProvider)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -50,7 +49,7 @@ function ManageProfile() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const responce1 = await axios.get("http://localhost:3001/userProfile/" + context.id);
+            const responce1 = await axios.get("http://localhost:3001/userProfile/1");
 
             if (responce1.data.profileValue == -1) {
                 navigator("/login")

@@ -11,6 +11,7 @@ function Products() {
         <>
             <NavBar />
             <NavBar2 />
+            <Search1Bar />
             <Container style={{marginBottom:"70px"}}>
                 <CardList />
             </Container>

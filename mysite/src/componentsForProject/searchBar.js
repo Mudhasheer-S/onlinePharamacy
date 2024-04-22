@@ -4,25 +4,15 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import './search.css'
 import { Button, Typography } from '@mui/material';
-import RoomIcon from '@mui/icons-material/Room';
-function Search1Bar({ onSearch }) {
-  const [query, setQuery] = useState('');
+
+function Search1Bar() {
 
   const handleChange = (event) => {
-    setQuery(event.target.value);
-  };
-
-  const handleSearch = () => {
-    if (onSearch) {
-      onSearch(query);
-    }
+    
   };
 
   return (
-   
 
-   
-    
     <div className="search-bar" style={{ height: "150px",margin:"0px"}}>
        
       <div style={{display:"flex",flexDirection:"column",justifyContent:"space-evenly",alignItems:"center"}}>
@@ -32,7 +22,8 @@ function Search1Bar({ onSearch }) {
               <div className="list">
             {/* <RoomIcon/> */}
             <TextField id="outlined-basic"  size="small" label="" variant="outlined"
-            placeholder="Enter delivery pincode"
+            placeholder="Search..."
+            onChange={handleChange}
             sx={{marginLeft:"8px",backgroundColor:"white"}}
             InputProps={{
                 startAdornment: (
@@ -48,10 +39,7 @@ function Search1Bar({ onSearch }) {
                     
                 ),
               }}
-              InputLabelProps={{
-                shrink: false,
-              }}
-        
+            
               />
             
         </div>
@@ -61,4 +49,4 @@ function Search1Bar({ onSearch }) {
   );
 }
 
-export default Search1Bar;
+export default Search1Bar;

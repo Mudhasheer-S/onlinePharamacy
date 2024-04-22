@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import React, { createContext } from 'react';
 import { Button, Grid, Container, Box } from '@mui/material';
-// import ProductDetail from "./ProductDetail";
+
 import { useNavigate } from "react-router-dom";
 
 function CardList() {
