@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios';
 import React, { createContext } from 'react';
 import { Button, Grid, Container, Box } from '@mui/material';
 
 import { useNavigate } from "react-router-dom";
+import { MyProvider } from "../App";
 
 function CardList() {
     const navigator = useNavigate();
     const [data, setvalue] = useState([]);
 
+    const {ContexData,setContexData} = useContext(MyProvider);
+
     useEffect(() => {
-        const apiurl = 'http://localhost:3001/dataSlide';
+        const apiurl = 'http://localhost:8080/products';
 
         axios.get(apiurl)
             .then(response => { setvalue(response.data); })
@@ -26,10 +29,11 @@ function CardList() {
 
     const handleButton = async (idValue) => {
         const responce1 = await axios.get("http://localhost:3001/userProfile/1");
+        
         const getProductObject = await axios.get(`http://localhost:3001/dataSlide/${idValue}`);
         const objectValue = {
             image: getProductObject.data.img,
-            Rs: getProductObject.data.Rate,
+            Rs: getProductObject.data.rate,
             heading: getProductObject.data.heading,
             Quantity: 1
         }
@@ -66,7 +70,7 @@ function CardList() {
                                 {data.heading}
                             </Grid>
                             <Grid sx={{ height: "50px", paddingTop: "30px" }}>
-                                ₹{data.Rate} <del style={{ fontSize: "12px", margin: "0px", color: "gray" }}>(₹{data.Rate - 100})</del><span style={{ color: "green" }}>   50% off</span>
+                                ₹{data.rate} <del style={{ fontSize: "12px", margin: "0px", color: "gray" }}>(₹{data.rate - 100})</del><span style={{ color: "green" }}>   50% off</span>
                             </Grid>
                             <Grid sx={{ textAlign: "center", height: "15%", paddingTop: "35px" }}>
 

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Typography, Grid, TextField, Button, InputAdornment, IconButton, InputLabel, MenuItem, FormControl, Container } from "@mui/material";
 import ShareIcon from '@mui/icons-material/Share';
 import RoomIcon from '@mui/icons-material/Room';
-// import SearchIcon from '@mui/icons-material/Search';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -14,7 +13,10 @@ import "./ProductDetail.css"
 import NavBar from './NavBar';
 import ResponsiveCards from './ResposiveCards';
 import Foot from './footer';
+import { MyProvider } from '../App';
 function ProductDetail() {
+
+  const {ContexData,setContexData} = useContext(MyProvider);
   const [productList, setvalue] = useState(
     {
       heading: "Cetaphil Baby Daily Lotion with Organic Calendula, 400 ml",
@@ -30,22 +32,24 @@ function ProductDetail() {
       img: "https://images.apollo247.in/pub/media/catalog/product/C/E/CET0347_1-JULY23_1.jpg?tr=w-250,q-80,f-webp,dpr-1.25,c-at_max",
     })
 
+  const features_arr = productList.features.toString().split(",");
+
   const lotionDescription = `${productList.productdetail} 
-         
-         ${productList.features[0]}
-         ${productList.features[1]}
-         ${productList.features[2]}
-         ${productList.features[3]}
+
+         ${features_arr[0]}
+         ${features_arr[1]}
+         ${features_arr[2]}
+         ${features_arr[3]}
         `
 
 
   const { idValue } = useParams();
 
   useEffect(() => {
-    const apiurl = `http://localhost:3001/dataSlide/${idValue}`;
+    const apiurl = `http://localhost:8080/products/${idValue}`;
 
     axios.get(apiurl)
-      .then(response => { setvalue(response.data); })
+      .then(response => { setvalue(response.data); console.log(response.data);})
       .catch(error => {
         console.error("Error", error);
       })
@@ -60,21 +64,37 @@ function ProductDetail() {
   };
 
   const cart = async (event) => {
-    const responce1 = await axios.get("http://localhost:3001/userProfile/1");
-    const getProductObject = await axios.get(`http://localhost:3001/dataSlide/${idValue}`);
+
     const objectValue = {
-      image: getProductObject.data.img,
-      Rs: getProductObject.data.Rate,
-      heading: getProductObject.data.heading,
-      Quantity: quantity
+      product_id:idValue,
+      username:ContexData
     }
+    const addItem=null;
+    try{
+      addItem = await axios.post(`http://localhost:8080/UserCart`,objectValue);
 
-
-    const response = await axios.get(`http://localhost:3001/cartItem/${responce1.data.profileValue}`);
-    const cartItem = response.data;
-    cartItem.Item.push(objectValue);
-    await axios.put(`http://localhost:3001/cartItem/${responce1.data.profileValue}`, cartItem);
+    }
+    catch(err){
+      console.error(err);
+    }
   };
+
+  // const cart = async (event) => {
+  //   const responce1 = await axios.get("http://localhost:3001/userProfile/1");
+  //   const getProductObject = await axios.get(`http://localhost:3001/dataSlide/${idValue}`);
+  //   const objectValue = {
+  //     image: getProductObject.data.img,
+  //     Rs: getProductObject.data.rate,
+  //     heading: getProductObject.data.heading,
+  //     Quantity: quantity
+  //   }
+
+
+  //   const response = await axios.get(`http://localhost:3001/cartItem/${responce1.data.profileValue}`);
+  //   const cartItem = response.data;
+  //   cartItem.Item.push(objectValue);
+  //   await axios.put(`http://localhost:3001/cartItem/${responce1.data.profileValue}`, cartItem);
+  // };
 
   return (
     <div >
@@ -110,7 +130,7 @@ function ProductDetail() {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <div className="list" >
-              <Typography variant="h5" sx={{ fontWeight: 'bold', marginLeft: "13px" }}>₹{productList.Rate} <del style={{ color: "grey", fontSize: "13px" }}>{`(₹${parseInt(productList.Rate) + 103})`}</del></Typography>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', marginLeft: "13px" }}>₹{productList.rate} <del style={{ color: "grey", fontSize: "13px" }}>{`(₹${parseInt(productList.rate) + 103})`}</del></Typography>
               <Typography sx={{ fontSize: "14px", marginLeft: "13px" }}>(Inclusive of all Taxes)</Typography>
             </div>
             <div className="list">

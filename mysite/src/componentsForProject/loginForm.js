@@ -1,11 +1,14 @@
 import { Grid, Box, Paper, Link, Checkbox, FormControlLabel, TextField, CssBaseline, Button, Avatar, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { MyProvider } from '../App';
 
 const defaultTheme = createTheme();
 export default function LoginForm() {
+
+  const {ContexData,setContexData} = useContext(MyProvider);
 
   const [UserName, setUserName] = useState("")
   const [UserPassword, setUserPassword] = useState("")
@@ -16,13 +19,12 @@ export default function LoginForm() {
   const [usernameerr, setusernameerr] = useState("");
 
   const navigator = useNavigate();
-  const [post, setPost] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     
-    const api = `http://localhost:3001/userData?username=${UserName}`
+    const api = `http://localhost:8080/userData?username=${UserName}`
     
     UserName == "" ? setuserr(true) : setuserr(false)
     
@@ -33,16 +35,18 @@ export default function LoginForm() {
     if(response.data.length == 0){
       setusernameerr("Username is not valid")
     }
-    else if (UserPassword != response.data[0].password) {
+    else if (UserPassword != response.data.password) {
       setusernameerr("Password is not valid");
     }
-    else if(UserPassword == response.data[0].password){
+    else if(UserPassword == response.data.password){
 
-      axios.put("http://localhost:3001/userProfile/1",{id:1,profileValue:response.data[0].id})
-      .then(response => console.log(response.data))
-      .catch(error => console.log(error))
+      setContexData(UserName);
+
+      // axios.put("http://localhost:3001/userProfile/1",{id:1,profileValue:response.data[0].id})
+      // .then(response => console.log(response.data))
+      // .catch(error => console.log(error))
       
-      navigator("/")
+      navigator("/");
     }
 
   };

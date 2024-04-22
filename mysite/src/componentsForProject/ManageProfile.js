@@ -7,7 +7,7 @@ import { Avatar, Button, Typography, Paper, Grid, Box, TextField } from '@mui/ma
 import "./ManageProfile.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { MyProvider } from '../App';
+import { MyProvider } from '../App'
 function ManageProfile() {
     const [gender, setGender] = React.useState('');
     const [Fname, setFname] = React.useState('');
@@ -20,44 +20,40 @@ function ManageProfile() {
     const [userData, setData] = React.useState('');
     const navigator = useNavigate();
 
-    // const context = useContext(MyProvider)
+    const {ContexData,setContexData} = useContext(MyProvider);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-
-
-        const responce = await axios.get(`http://localhost:3001/userData/${UserId}`)
-
         const Submitted = {
             name: Fname + " " + Lname,
-            username: responce.data.username,
             dob: dob,
             age: age,
-            password: responce.data.password,
-            phone: phone,
+            phone_number: parseInt(phone),
             email: email,
             gender: gender,
+            username:ContexData
         };
-        // console.log(Submitted);
 
-        await axios.put(`http://localhost:3001/userData/${UserId}`, Submitted)
+        await axios.put(`http://localhost:8080/profile?username=${ContexData}`, Submitted)
             .then(response => setData(response.data))
             .catch(error => console.log(error))
-
     };
 
     useEffect(() => {
         const fetchData = async () => {
-            const responce1 = await axios.get("http://localhost:3001/userProfile/1");
 
-            if (responce1.data.profileValue == -1) {
+            if (ContexData == null) {
                 navigator("/login")
             }
-            setUserId(responce1.data.profileValue);
-            await axios.get(`http://localhost:3001/userData/${responce1.data.profileValue}`)
-                .then(responce => setData(responce.data))
-                .catch(error => console.log(error))
+            setUserId(ContexData);
+            await axios.get(`http://localhost:8080/profile?username=${ContexData}`)
+                .then(responce => {setData(responce.data);})
+                .catch(error => console.error(error))
+
+            
+
         }
         fetchData();
     }, [])
@@ -89,7 +85,7 @@ function ManageProfile() {
                         <hr />
                         <Grid style={{ paddingLeft: "20px" }}>
                             <h2>Phone number:</h2>
-                            <h4 style={{}}>{userData.phone}</h4>
+                            <h4 style={{}}>{userData.phone_number}</h4>
                         </Grid>
                         <hr />
                         <Grid style={{ paddingLeft: "20px" }}>
@@ -212,7 +208,7 @@ function ManageProfile() {
                                                                 <Button variant="contained" color="warning" onClick={() => close()} sx={{ marginRight: '10px' }}>
                                                                     CANCEL
                                                                 </Button>
-                                                                <Button type="submit" variant="contained" color="warning" onClick={handleSubmit}>
+                                                                <Button type="submit" variant="contained" color="warning" onClick={(event) => {handleSubmit(event) ; close();}}>
                                                                     SAVE
                                                                 </Button>
                                                             </Box>

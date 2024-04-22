@@ -24,7 +24,7 @@ const ResponsiveCards = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    const apiurl = 'http://localhost:3001/dataSlide';
+    const apiurl = 'http://localhost:8080/products';
 
     axios.get(apiurl)
       .then(response => { setvalue(response.data); })
@@ -58,7 +58,7 @@ const ResponsiveCards = () => {
                   {data.heading}
                 </Box>
                 <Box sx={{ height: "50px", paddingTop: "5px", textAlign: "left", paddingLeft: "5px" }}>
-                  ₹{data.Rate} <del style={{ fontSize: "12px", margin: "0px", color: "gray" }}>(₹{data.Rate - 100})</del><span style={{ color: "green" }}>   50% off</span>
+                  ₹{data.rate} <del style={{ fontSize: "12px", margin: "0px", color: "gray" }}>(₹{data.rate - 100})</del><span style={{ color: "green" }}>   50% off</span>
                 </Box>
                 <Box sx={{ textAlign: "center", height: "15%", }}>
 

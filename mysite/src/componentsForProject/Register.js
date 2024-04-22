@@ -24,7 +24,7 @@ export default function RegisterForm() {
     const handleSubmit = async (e) =>{ 
         e.preventDefault()
         
-        const user = await axios.get(`http://localhost:3001/userData?username=${username}`)
+        const user = await axios.get(`http://localhost:8080/userData?username=${username}`)
         
         if(user.data.length == 1){
             setpassworderror("Username already exists")
@@ -35,7 +35,7 @@ export default function RegisterForm() {
         }
         else if((firstName!="" && lastName!="" && username!="" && password!="" && confirmpassword!="") && (password==confirmpassword)){
 
-            const api = 'http://localhost:3001/userData';
+            const api = 'http://localhost:8080/userData';
             axios.post(api,{
                     name:`${firstName} ${lastName}`,
                     username: username,
@@ -47,9 +47,9 @@ export default function RegisterForm() {
                 .catch(error => {
                     console.error('Error:',error);
                 });
-                const id = await axios.get(`http://localhost:3001/userData?username=${username}`)
+                const id = await axios.get(`http://localhost:8080/userData?username=${username}`)
 
-                await axios.post("http://localhost:3001/CartItem",{id:id.data.id,Item:[]})
+                // await axios.post("http://localhost:3001/CartItem",{id:id.data.id,Item:[]})
                 navigation("/login");
             }
             
@@ -63,6 +63,9 @@ export default function RegisterForm() {
             password=="" ? setpasserr(true) : setpasserr(false)
             
             confirmpassword=="" ? setconerr(true) : setconerr(false)
+
+
+    
             
     };
         
@@ -164,10 +167,10 @@ export default function RegisterForm() {
                                         <TextField
                                             required
                                             fullWidth
-                                            name="password"
+                                            name="conformpassword"
                                             label="Conform Password"
                                             type="password"
-                                            id="password"
+                                            id="conform-password"
                                             autoComplete="new-password"
                                             onChange={(e) => (setconfirmpassword(e.target.value),
                                                 setconerr(false))}
