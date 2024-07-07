@@ -6,17 +6,19 @@ import NavBar from './NavBar';
 import NavBar2 from './NavBar2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MyProvider } from '../App';
 
 const MyCart = () => {
     const navigator = useNavigate();
     const [orders, setData] = useState([]);
-    const {ContexData,setContexData} = useContext(MyProvider);
 
     useEffect(() => {
         const fetchData = async () => {
 
-            axios.get(`http://localhost:8080/UserCart?username=${ContexData}`)
+            if (localStorage.getItem("username") == null) {
+                navigator("/login")
+            }
+
+            axios.get(`http://localhost:8080/UserCart?username=${localStorage.getItem("username")}`)
                 .then(responce => setData(responce.data))
                 .catch(error => console.log(error))
         }

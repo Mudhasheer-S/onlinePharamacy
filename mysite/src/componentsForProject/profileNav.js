@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 function ProfileNav()
 {
     const navigator = useNavigate();
+
+    const logout = () => {
+        localStorage.clear();
+    }
     return( 
         <div className="sidebar">
             <ul className="sidebarlist">
@@ -12,7 +16,7 @@ function ProfileNav()
                 return (
                 <li key={key} 
                 className="row"
-                onClick={() => {navigator(val.link)}}>
+                onClick={() => {if(val.link == "/login"){logout();} navigator(val.link)}}>
                     <div id="ico">{val.icon}</div>
                     <div id="tit">
                         {val.title}

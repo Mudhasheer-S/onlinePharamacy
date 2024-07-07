@@ -7,7 +7,6 @@ import { Avatar, Button, Typography, Paper, Grid, Box, TextField } from '@mui/ma
 import "./ManageProfile.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MyProvider } from '../App'
 function ManageProfile() {
     const [gender, setGender] = React.useState('');
     const [Fname, setFname] = React.useState('');
@@ -16,11 +15,8 @@ function ManageProfile() {
     const [phone, setphone] = React.useState('');
     const [age, setAge] = React.useState('');
     const [email, setEmail] = React.useState('');
-    const [UserId, setUserId] = React.useState('')
     const [userData, setData] = React.useState('');
-    const navigator = useNavigate();
-
-    const {ContexData,setContexData} = useContext(MyProvider);
+    const navigator = useNavigate();    
 
 
     const handleSubmit = async (event) => {
@@ -33,10 +29,10 @@ function ManageProfile() {
             phone_number: parseInt(phone),
             email: email,
             gender: gender,
-            username:ContexData
+            username:localStorage.getItem("username")
         };
 
-        await axios.put(`http://localhost:8080/profile?username=${ContexData}`, Submitted)
+        await axios.put(`http://localhost:8080/profile?username=${localStorage.getItem("username")}`, Submitted)
             .then(response => setData(response.data))
             .catch(error => console.log(error))
     };
@@ -44,11 +40,11 @@ function ManageProfile() {
     useEffect(() => {
         const fetchData = async () => {
 
-            if (ContexData == null) {
+            if (localStorage.getItem("username") == null) {
                 navigator("/login")
             }
-            setUserId(ContexData);
-            await axios.get(`http://localhost:8080/profile?username=${ContexData}`)
+
+            await axios.get(`http://localhost:8080/profile?username=${localStorage.getItem("username")}`)
                 .then(responce => {setData(responce.data);})
                 .catch(error => console.error(error))
 

@@ -13,10 +13,8 @@ import "./ProductDetail.css"
 import NavBar from './NavBar';
 import ResponsiveCards from './ResposiveCards';
 import Foot from './footer';
-import { MyProvider } from '../App';
 function ProductDetail() {
 
-  const {ContexData,setContexData} = useContext(MyProvider);
   const [productList, setvalue] = useState(
     {
       heading: "Cetaphil Baby Daily Lotion with Organic Calendula, 400 ml",
@@ -67,7 +65,7 @@ function ProductDetail() {
 
     const objectValue = {
       product_id:idValue,
-      username:ContexData,
+      username:localStorage.getItem("username"),
       qty: quantity==0 ? 1 : quantity
     }
     const addItem=null;

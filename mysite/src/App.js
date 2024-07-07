@@ -11,18 +11,11 @@ import ContactUs from "./componentsForProject/Contact";
 import FAQ from "./componentsForProject/FAQ";
 import Products from "./componentsForProject/Products";
 import NeedHelp from "./componentsForProject/NeedHelp";
-import { createContext, useState } from "react";
-
-
-export const MyProvider = createContext();
 
 function App() {
 
-  const [ContexData, setContexData] = useState(null);
-
   return (
     <div>
-        <MyProvider.Provider value={{ContexData,setContexData}}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
@@ -37,7 +30,6 @@ function App() {
           <Route path="/FAQ" element={<FAQ />} />
           <Route path="/ProductDetail/:idValue" Component={ProductDetail} element={<ProductDetail />} />
         </Routes>
-        </MyProvider.Provider>
     </div>
   );
 }

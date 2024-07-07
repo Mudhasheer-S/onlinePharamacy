@@ -3,12 +3,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MyProvider } from '../App';
 
 const defaultTheme = createTheme();
 export default function LoginForm() {
-
-  const {ContexData,setContexData} = useContext(MyProvider);
 
   const [UserName, setUserName] = useState("")
   const [UserPassword, setUserPassword] = useState("")
@@ -39,8 +36,8 @@ export default function LoginForm() {
       setusernameerr("Password is not valid");
     }
     else if(UserPassword == response.data.password){
-
-      setContexData(UserName);
+      localStorage.clear();
+      localStorage.setItem('username',UserName);
       
       navigator("/");
     }

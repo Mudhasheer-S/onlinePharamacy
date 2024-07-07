@@ -4,15 +4,17 @@ import React, { createContext } from 'react';
 import { Button, Grid, Container, Box } from '@mui/material';
 
 import { useNavigate } from "react-router-dom";
-import { MyProvider } from "../App";
 
 function CardList() {
     const navigator = useNavigate();
     const [data, setvalue] = useState([]);
 
-    const {ContexData,setContexData} = useContext(MyProvider);
-
     useEffect(() => {
+
+        if (localStorage.getItem("username") == null) {
+            navigator("/login")
+        }
+
         const apiurl = 'http://localhost:8080/products';
 
         axios.get(apiurl)
@@ -30,7 +32,7 @@ function CardList() {
     const handleButton = async (idValue) => {
         const objectValue = {
             product_id:idValue,
-            username:ContexData,
+            username:localStorage.getItem("username"),
             qty:1
           }
           const addItem=null;

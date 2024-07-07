@@ -6,7 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import axios from 'axios';
 import { Button, Grid, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { MyProvider } from '../App';
 
 
 const settings = {
@@ -24,9 +23,12 @@ const ResponsiveCards = () => {
   const [data, setvalue] = useState([]);
   const navigator = useNavigate();
 
-  const {ContexData,setContexData} = useContext(MyProvider)
-
   useEffect(() => {
+
+    if (localStorage.getItem("username") == null) {
+      navigator("/login")
+    }
+
     const apiurl = 'http://localhost:8080/products';
 
     axios.get(apiurl)
@@ -39,7 +41,7 @@ const ResponsiveCards = () => {
   const handleButton = async (idValue) => {
     const objectValue = {
         product_id:idValue,
-        username:ContexData,
+        username:localStorage.getItem("username"),
         qty:1
       }
       const addItem=null;
